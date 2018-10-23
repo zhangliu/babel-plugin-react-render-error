@@ -27,7 +27,7 @@
     "babel-plugin"
   ],
   "dependencies": {},
-  "name": "babel-plugin-react-render-error",
+  "name": "@zhangliu/babel-plugin-react-render-error",
   "bugs": {
     "url": "https://github.com/zhangliu/babel-plugin-react-render-error/issues"
   },

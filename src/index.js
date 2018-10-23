@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const tag = 'ErrorBoundary'
 export default function({types: t }) {
   return {
     visitor: {
@@ -13,7 +14,7 @@ export default function({types: t }) {
         )
 
         path.node.arguments = [
-          t.identifier('E'),
+          t.identifier(tag),
           t.nullLiteral(),
           eNode
         ]
@@ -29,5 +30,5 @@ const isJSXCall = (path) => {
 }
 
 const isE = (path) => {
-  return _.get(path, 'node.arguments[0].name') === 'E'
+  return _.get(path, 'node.arguments[0].name') === tag
 }
