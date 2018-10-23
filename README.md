@@ -47,14 +47,8 @@ $ npm install babel-plugin-react-render-error
 
 ```json
 {
-  "plugins": ["react-render-error"]
+  "plugins": ["react-render-error", "{\"ErrorBoundaryFile\":\"./ErrorBoundaryFile.js\"}"]
 }
-```
-
-### Via CLI
-
-```sh
-$ babel --plugins react-render-error script.js
 ```
 
 ### Via Node API
