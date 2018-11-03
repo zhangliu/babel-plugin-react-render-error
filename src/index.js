@@ -13,9 +13,10 @@ export default function({types: t }) {
           path.node.arguments
         )
 
+        const key = getKey(path)
         path.node.arguments = [
           t.identifier(tag),
-          t.nullLiteral(),
+          key ? t.objectExpression([key]) : t.nullLiteral(),
           eNode
         ]
       },
@@ -31,4 +32,10 @@ const isJSXCall = (path) => {
 
 const isE = (path) => {
   return _.get(path, 'node.arguments[0].name') === tag
+}
+
+const getKey = (path) => {
+  const props =  _.get(path, 'node.arguments[1].properties')
+  const key = props.find(p => p.key.name === 'key')
+  return key
 }
