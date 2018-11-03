@@ -35,7 +35,7 @@ const isE = (path) => {
 }
 
 const getKey = (path) => {
-  const props =  _.get(path, 'node.arguments[1].properties')
+  const props =  _.get(path, 'node.arguments[1].properties', [])
   const key = props.find(p => p.key.name === 'key')
   return key
 }
