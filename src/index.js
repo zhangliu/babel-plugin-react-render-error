@@ -1,12 +1,13 @@
 const _ = require('lodash')
-const tag = 'ErrorBoundary'
+const ErrorBoundary = 'ErrorBoundary'
 export default function({types: t }) {
   return {
     visitor: {
-      CallExpression(path, state) {
+      CallExpression(path, {opts: {excludes = []}}) {
         if(!isJSXCall(path)) return
-        if (isE(path)) return
-        if (isE(path.parentPath)) return
+        if (isExcludes(path, [ErrorBoundary])) return
+        if (isExcludes(path, excludes)) removeErrorBoundary(path)
+        if (isExcludes(path.parentPath, excludes.concat([ErrorBoundary]))) return
 
         const eNode = t.callExpression(
           t.memberExpression(t.identifier('React'), t.identifier('createElement')),
@@ -15,7 +16,7 @@ export default function({types: t }) {
 
         const key = getKey(path)
         path.node.arguments = [
-          t.identifier(tag),
+          t.identifier(ErrorBoundary),
           key ? t.objectExpression([key]) : t.nullLiteral(),
           eNode
         ]
@@ -30,8 +31,16 @@ const isJSXCall = (path) => {
   return (className === 'React') && (propName === 'createElement')
 }
 
-const isE = (path) => {
-  return _.get(path, 'node.arguments[0].name') === tag
+const isExcludes = (path, excludes) => {
+  const name = _.get(path, 'node.arguments[0].name')
+  return excludes.includes(name)
+}
+
+const removeErrorBoundary = (path) => {
+  const childName = _.get(path, 'node.arguments[2].arguments[0].name')
+  if (childName === ErrorBoundary) {
+    path.node.arguments[2] = path.node.arguments[2].arguments[2]
+  }
 }
 
 const getKey = (path) => {

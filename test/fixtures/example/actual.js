@@ -6,8 +6,8 @@ import Son from './son';
 
 const Index = (
     <App>
-        <Father key='fjdljflsfd'>
-            <Son key={'fldsjflsjflsd'}></Son>
+        <Father>
+            <Son key='son'></Son>
         </Father>
     </App>
 )
