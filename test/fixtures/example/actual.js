@@ -7,7 +7,9 @@ import Son from './son';
 const Index = (
     <App>
         <Father>
-            <Son key='son'></Son>
+            <Son key='son1'></Son>
+            <Son key='son2'></Son>
+            <Son key='son3'></Son>
         </Father>
     </App>
 )

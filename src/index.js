@@ -37,9 +37,12 @@ const isExcludes = (path, excludes) => {
 }
 
 const removeErrorBoundary = (path) => {
-  const childName = _.get(path, 'node.arguments[2].arguments[0].name')
-  if (childName === ErrorBoundary) {
-    path.node.arguments[2] = path.node.arguments[2].arguments[2]
+  const args = _.get(path, 'node.arguments', [])
+  for (let i = 0; i < args.length; i++) {
+    const childName = _.get(args[i], 'arguments[0].name')
+    if (childName === ErrorBoundary) {
+      args[i] = args[i].arguments[2]
+    }
   }
 }
 
