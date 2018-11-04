@@ -4,14 +4,20 @@ import App from './app';
 import Father from './father';
 import Son from './son';
 
+class FF extends React.Component {
+    render() {
+        return <Father>{ this.props.children || null }</Father>
+    }
+}
+
 const Index = (
-    <App>
-        <Father>
-            <Son key='son1'></Son>
-            <Son key='son2'></Son>
-            <Son key='son3'></Son>
-        </Father>
-    </App>
+    <div>
+        {[1, 2].map(v => (
+            <FF key={v}>
+                <span key='son1'>3333</span>
+            </FF>
+        ))}
+    </div>
 )
 
-export default Index
+export default <Index />

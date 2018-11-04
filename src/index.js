@@ -1,9 +1,11 @@
 const _ = require('lodash')
-const ErrorBoundary = 'ErrorBoundary'
+let ErrorBoundary
+
 export default function({types: t }) {
   return {
     visitor: {
-      CallExpression(path, {opts: {excludes = []}}) {
+      CallExpression(path, {opts: {excludes = [], ErrorBoundaryTag = 'ErrorBoundary'}}) {
+        ErrorBoundary = ErrorBoundaryTag
         if(!isJSXCall(path)) return
         if (isExcludes(path, [ErrorBoundary])) return
         if (isExcludes(path, excludes)) removeErrorBoundary(path)
